@@ -4,6 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,17 +19,23 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 1, max = 15, message = "Name should be between 1 and 15 characters")
     private String name;
 
     @Column(name = "surname")
+    @Size(min = 1, max = 15, message = "Surname should be between 1 and 15 characters")
     private String surname;
 
     @Column(name = "age")
+    @Min(value = 1, message = "Age should be greater than 1")
     private int age;
 
+
     @Column(name = "username")
+    @Size(min = 1, max = 15, message = "Username should be between 1 and 15 characters")
     private String username;
     @Column(name = "password")
+    @NotEmpty(message = "User should have a password")
     private String password;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -34,15 +43,8 @@ public class User implements UserDetails {
             name = "User_Role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @NotEmpty(message = "User should have a role")
     private List<Role> roles;
-
-//    public User(Long id, String name, String surname, int age) {
-//        this.id = id;
-//        this.name = name;
-//        this.surname = surname;
-//        this.age = age;
-//    }
-
 
     public User(String name, String surname, int age, String username, String password, List<Role> roles) {
         this.name = name;
@@ -109,7 +111,7 @@ public class User implements UserDetails {
         return name + " " + surname + " " + age;
     }
 
-    public String getRolesToStrng (){
+    public String getRolesToString() {
         return roles.toString();
     }
 

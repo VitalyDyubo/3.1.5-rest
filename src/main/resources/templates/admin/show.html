@@ -11,7 +11,7 @@
 <p th:text="${'User`s id: ' + user.getId()}">VALUE</p>
 <p th:text="${'User`s name: ' + user.getName()}">VALUE</p>
 <p th:text="${'User`s surname: ' + user.getSurname()}">VALUE</p>
-<p th:text="${'User`s roles: ' + user.getRolesToStrng()}">VALUE</p>
+<p th:text="${'User`s roles: ' + user.getRolesToString()}">VALUE</p>
 
 
 <form th:method="GET" th:action="@{/admin/userinfo/{id}/edit(id=${user.getId()})}">

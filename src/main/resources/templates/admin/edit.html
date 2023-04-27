@@ -10,17 +10,22 @@
 <form th:method="PATCH" th:action="@{/admin/userinfo/{id}(id = ${user.getId()})}" th:object="${user}">
     <label for="username">Enter user's username: </label>
     <input type="text" th:field="*{username}" id="username">
+    <div style="color: indianred" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
     <br/>
     <label for="password">Enter user's password: </label>
     <input type="text" th:field="*{password}" id="password">
+    <div style="color: indianred" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
     <br/>
-    <label for="name">Enter user's username: </label>
+    <label for="name">Enter user's name: </label>
     <input type="text" th:field="*{name}" id="name">
+    <div style="color: indianred" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
     <br/>
     <label for="surname">Enter user's surname: </label>
     <input type="text" th:field="*{surname}" id="surname">
+    <div style="color: indianred" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Name error</div>
     <br/>
     <label for="age">Enter user's age</label>
+    <div style="color: indianred" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
     <input type="text" th:field="*{age}" id="age">
     <br/>
     <select class="form-control" id="roles" name="roles" multiple="multiple">
@@ -31,6 +36,7 @@
         </option>
     </select>
     <br>
+    <div style="color: indianred" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Role error</div>
     <input type="submit" value="Update!">
 </form>
 <br/>
