@@ -19,23 +19,18 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
-    @Size(min = 1, max = 15, message = "Name should be between 1 and 15 characters")
     private String name;
 
     @Column(name = "surname")
-    @Size(min = 1, max = 15, message = "Surname should be between 1 and 15 characters")
     private String surname;
 
     @Column(name = "age")
-    @Min(value = 1, message = "Age should be greater than 1")
     private int age;
 
 
     @Column(name = "username")
-    @Size(min = 1, max = 15, message = "Username should be between 1 and 15 characters")
     private String username;
     @Column(name = "password")
-    @NotEmpty(message = "User should have a password")
     private String password;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -43,7 +38,6 @@ public class User implements UserDetails {
             name = "User_Role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @NotEmpty(message = "User should have a role")
     private List<Role> roles;
 
     public User(String name, String surname, int age, String username, String password, List<Role> roles) {
@@ -112,7 +106,7 @@ public class User implements UserDetails {
     }
 
     public String getRolesToString() {
-        return roles.toString();
+        return roles.toString().substring(1, (roles.toString().length() - 1));
     }
 
     @Override

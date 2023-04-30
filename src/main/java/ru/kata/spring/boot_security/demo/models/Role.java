@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -56,8 +55,12 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.name;
+        if (name.equals("ROLE_ADMIN")) {
+            return "Admin";
+        } else return "User";
     }
+
+
 }
 
 
