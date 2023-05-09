@@ -1,8 +1,11 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,25 +23,33 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2,max = 20, message = "Name should be between 2 and 20 characters")
     private String name;
 
     @Column(name = "surname")
+    @NotEmpty(message = "Surname should not be empty")
+    @Size(min = 2,max = 20, message = "Surname should be between 2 and 20 characters")
     private String surname;
 
     @Column(name = "age")
+    @Min(value = 0, message = "Age should be greater than 0")
     private int age;
 
-
     @Column(name = "username")
+    @NotEmpty(message = "Username should not be empty")
+    @Size(min = 2,max = 20, message = "Username should be between 2 and 20 characters")
     private String username;
     @Column(name = "password")
+    @NotEmpty(message = "Password should no be empty")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "User_Role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @NotEmpty(message = "User should have any role")
     private List<Role> roles;
 
     public User(String name, String surname, int age, String username, String password, List<Role> roles) {
@@ -143,5 +155,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
+
 
