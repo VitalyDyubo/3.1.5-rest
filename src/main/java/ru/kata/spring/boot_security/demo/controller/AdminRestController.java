@@ -28,12 +28,6 @@ public class AdminRestController {
         this.validator = validator;
     }
 
-    @GetMapping()
-    public ModelAndView admin(Model model, Principal principal) {
-        User authentificatedUser = userService.findByUserName(principal.getName());
-        model.addAttribute("authenticatedUserRoles", authentificatedUser.getRoles());
-        return new ModelAndView("admin/admin");
-    }
 
     @GetMapping("/allUsers")
     public ResponseEntity<List<User>> getAllUsers() {

@@ -22,13 +22,6 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public ModelAndView user(Model model, Principal principal) {
-        User authentificatedUser = userService.findByUserName(principal.getName());
-        model.addAttribute("authenticatedUserRoles", authentificatedUser.getRoles());
-        return new ModelAndView("user/user");
-    }
-
     @GetMapping("/user")
     public ResponseEntity<User> getAuthenticatedUser(Principal principal) {
         User user = userService.findByUserName(principal.getName());
